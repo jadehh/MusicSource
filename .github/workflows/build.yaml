@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_ios_without_signing_phone:
-    name: Build Expo MusicSource Without Signing
+  build_ios:
+    name: Build IOS App
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -21,16 +21,16 @@ jobs:
       - name: Build Expo IPA
         run: |
           cd ios
-          xcodebuild -scheme reacttube -workspace reacttube.xcworkspace -configuration release archive -archivePath reacttube.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-          ../scripts/xcarchive_to_ipa.sh reacttube.xcarchive
+          xcodebuild -scheme MusicSource -workspace MusicSource.xcworkspace -configuration release archive -archivePath MusicSource.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+          ../scripts/xcarchive_to_ipa.sh MusicSource.xcarchive
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
           path: ios/*.ipa
 
 
-  build_apk_without_signing_phone:
-    name: Build Expo Android Phone
+  build_android:
+    name: Build  Android  App
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -49,10 +49,16 @@ jobs:
       - name: Build Expo Android
         run: |
           cd android
-          ./gradlew assembleRelease armeabi-v7
-          ./gradlew assembleRelease arm64-v8a
-          ./gradlew assembleRelease x86
-          ./gradlew assembleRelease x86_64
+          ./gradlew assembleRelease -PreactNativeArchitectures=armeabi-v7a
+          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-armeabi-v7a.apk
+          ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a
+          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-arm64-v8a.apk
+          ./gradlew assembleRelease -PreactNativeArchitectures=x86
+          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-x86.apk
+          ./gradlew assembleRelease -PreactNativeArchitectures=x86_64
+          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-x86_64.apk
+      
+      
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
