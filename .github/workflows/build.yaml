@@ -22,6 +22,7 @@ jobs:
         run: |
           cd ios
           xcodebuild -scheme MusicSource -workspace MusicSource.xcworkspace -configuration release archive -archivePath MusicSource.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+          chmod a+x ../scripts/xcarchive_to_ipa.sh
           ../scripts/xcarchive_to_ipa.sh MusicSource.xcarchive
       - name: Upload IPA
         uses: actions/upload-artifact@v4
@@ -50,13 +51,13 @@ jobs:
         run: |
           cd android
           ./gradlew assembleRelease -PreactNativeArchitectures=armeabi-v7a
-          mv app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-armeabi-v7a.apk
+          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-armeabi-v7a.apk
           ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a
-          mv app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-arm64-v8a.apk
+          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-arm64-v8a.apk
           ./gradlew assembleRelease -PreactNativeArchitectures=x86
-          mv app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-x86.apk
+          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-x86.apk
           ./gradlew assembleRelease -PreactNativeArchitectures=x86_64
-          mv app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-x86_64.apk
+          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-x86_64.apk
       
       
 
