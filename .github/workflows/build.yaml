@@ -50,13 +50,13 @@ jobs:
         run: |
           cd android
           ./gradlew assembleRelease -PreactNativeArchitectures=armeabi-v7a
-          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-armeabi-v7a.apk
+          mv app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-armeabi-v7a.apk
           ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a
-          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-arm64-v8a.apk
+          mv app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-arm64-v8a.apk
           ./gradlew assembleRelease -PreactNativeArchitectures=x86
-          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-x86.apk
+          mv app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-x86.apk
           ./gradlew assembleRelease -PreactNativeArchitectures=x86_64
-          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-x86_64.apk
+          mv app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-x86_64.apk
       
       
 
