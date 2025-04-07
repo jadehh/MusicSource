@@ -48,58 +48,55 @@ jobs:
         uses: ./.github/actions/prebuild
         with:
           platform: "android"
-      - name: Build Expo Android
-        run: |
+      - name: Build Unknown Device
+        run :
           cd android
-          echo "Build Unknown Device"
-          ./gradlew assembleRelease 
+          ./gradlew assembleRelease
           mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-unknown.apk
-          ls app/build/outputs/apk/release/ -l
-          echo "Build Armeabi-v7a Device"
-          ./gradlew assembleRelease -PreactNativeArchitectures=armeabi-v7a
-          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-armeabi-v7a.apk
-          ls app/build/outputs/apk/release/ -l
-          echo "Build Arm64-v8a Device"
-          ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a
-          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-arm64-v8a.apk
-          ls app/build/outputs/apk/release/ -l
-          echo "Build X86 Device"
-          ./gradlew assembleRelease -PreactNativeArchitectures=x86
-          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-x86.apk
-          ls app/build/outputs/apk/release/ -l
-          echo "Build x86_64 Device"
-          ./gradlew assembleRelease -PreactNativeArchitectures=x86_64
-          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-x86_64.apk
-          ls app/build/outputs/apk/release/ -l
-
       - name: Upload APK (unknown)
         uses: actions/upload-artifact@v4
         with:
           name: app-release-unknown.apk
           path: android/app/build/outputs/apk/release/app-release-unknown.apk
           compression-level: 9
-
+      - name: Build Armeabi-v7a Device
+        run:
+          cd android
+          ./gradlew assembleRelease -PreactNativeArchitectures=armeabi-v7a
+          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-armeabi-v7a.apk
       - name: Upload APK (armeabi-v7a)
         uses: actions/upload-artifact@v4
         with:
           name: app-release-armeabi-v7a.apk
           path: android/app/build/outputs/apk/release/app-release-armeabi-v7a.apk
           compression-level: 9
-
+      - name: Build Arm64-v8a Device
+        run:
+          cd android
+          ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a
+          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-arm64-v8a.apk
       - name: Upload APK (arm64-v8a)
         uses: actions/upload-artifact@v4
         with:
           name: app-release-arm64-v8a.apk
           path: android/app/build/outputs/apk/release/app-release-arm64-v8a.apk
           compression-level: 9
-
+      - name: Build X86 Device
+        run:
+          cd android
+          ./gradlew assembleRelease -PreactNativeArchitectures=x86
+          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-x86.apk
       - name: Upload APK (x86)
         uses: actions/upload-artifact@v4
         with:
           name: app-release-x86.apk
           path: android/app/build/outputs/apk/release/app-release-x86.apk
           compression-level: 9
-
+      - name: Build X86_64 Device
+        run:
+          cd android
+          ./gradlew assembleRelease -PreactNativeArchitectures=x86_64
+          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-x86_64.apk
       - name: Upload APK (x86_64)
         uses: actions/upload-artifact@v4
         with:
