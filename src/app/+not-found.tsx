@@ -28,4 +28,4 @@ function Unmatched() {
     return <Redirect href="/" />
 }
 
-export default Unmatched;
+export default Unmatched

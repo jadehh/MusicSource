@@ -25,13 +25,7 @@ const SongsScreenLayout = () => {
                     options={{
                         ...StackScreenWithSearchBar,
                         headerTitle: i18n.t('appTab.songs'),
-                        headerLeft: () => <GlobalButton />,
-                        headerRight: () => (
-                            <Button
-                                onPress={() => alert('Button pressed!')}
-                                title="New Button"
-                            />
-                        ),
+                        headerRight: () => <GlobalButton />,
                     }}
                 />
             </Stack>

@@ -12,21 +12,41 @@ import React from 'react';
 import { colors, fontSize } from '@/constants/constant';
 import { Ionicons } from '@expo/vector-icons';
 import i18n from "@/utils/i18n";
+import { BlurView } from 'expo-blur'
+import { StyleSheet } from 'react-native'
 
 // 定义 TabsNavigation 组件
 const TabsNavigation = () => {
     return (
         <>
-            <Tabs
-                screenOptions={{
-                    tabBarActiveTintColor: colors.primary,
-                    tabBarLabelStyle: {
-                        fontSize: fontSize.xs,
-                        fontWeight: '500',
-                    },
-                    headerShown: false,
-                }}
-            >
+			<Tabs
+				screenOptions={{
+					tabBarActiveTintColor: colors.primary,
+					tabBarLabelStyle: {
+						fontSize: fontSize.xs,
+						fontWeight: '500',
+					},
+					headerShown: false,
+					tabBarStyle: {
+						position: 'absolute',
+						borderTopLeftRadius: 20,
+						borderTopRightRadius: 20,
+						borderTopWidth: 0,
+						paddingTop: 0,
+					},
+					tabBarBackground: () => (
+						<BlurView
+							intensity={90}
+							style={{
+								...StyleSheet.absoluteFillObject, //相当于position: 'absolute', left: 0, right: 0, top: 0, bottom: 0
+								overflow: 'hidden',
+								borderTopLeftRadius: 20,
+								borderTopRightRadius: 20,
+							}}
+						/>
+					),
+				}}
+			>
                 <Tabs.Screen
                     name="(songs)"
                     options={{

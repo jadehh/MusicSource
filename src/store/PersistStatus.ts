@@ -11,6 +11,7 @@ import getOrCreateMMKV from '@/store/getOrCreateMMKV'
 import safeParse from '@/utils/safeParse'
 
 import {useEffect, useState} from 'react'
+import {saveData,getStorage} from "@/helpers/storage";
 
 const PersistConfig = {
     PersistStatus: 'appPersistStatus',
@@ -20,47 +21,31 @@ interface IPersistConfig {
     'app.language': string
 }
 
-function set<K extends keyof IPersistConfig>(key: K, value: IPersistConfig[K] | undefined) {
+async function set<K extends keyof IPersistConfig>(key: K, value: IPersistConfig[K] | undefined) {
+
+
     // 保存数据
-    const store = getOrCreateMMKV(PersistConfig.PersistStatus)
-    if (value === undefined) {
-        store.delete(key)
-    } else {
-        store.set(key, JSON.stringify(value))
-    }
+    // const store = getOrCreateMMKV(PersistConfig.PersistStatus)
+    // if (value === undefined) {
+    //     store.delete(key)
+    // } else {
+    //     store.set(key, JSON.stringify(value))
+    // }
+    await saveData(key, value)
 }
 
-function get<K extends keyof IPersistConfig>(key: K): IPersistConfig[K] | null {
-    const store = getOrCreateMMKV(PersistConfig.PersistStatus)
-    const raw = store.getString(key)
-    if (raw) {
-        return safeParse(raw) as IPersistConfig[K]
-    }
-    return null
+async function get<K extends keyof IPersistConfig>(key: K): Promise<IPersistConfig[K] | null> {
+
+    // const store = getOrCreateMMKV(PersistConfig.PersistStatus)
+    // const raw = store.getString(key)
+    // if (raw) {
+    //     return safeParse(raw) as IPersistConfig[K]
+    // }
+    // return null
+    return  safeParse(await getStorage(key)) as IPersistConfig[K]
 
 }
 
-function useValue<K extends keyof IPersistConfig>(
-    key: K,
-    defaultValue?: IPersistConfig[K],
-): IPersistConfig[K] | null {
-    const [state, setState] = useState<IPersistConfig[K] | null>(get(key) ?? defaultValue ?? null)
-
-    useEffect(() => {
-        const store = getOrCreateMMKV(PersistConfig.PersistStatus)
-        const sub = store.addOnValueChangedListener((changedKey) => {
-            if (key === changedKey) {
-                setState(get(key))
-            }
-        })
-
-        return () => {
-            sub.remove()
-        }
-    }, [key])
-
-    return state
-}
 
 const PersistStatus = {
     get,

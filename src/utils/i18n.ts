@@ -25,14 +25,14 @@ i18n.enableFallback = true
 export const nowLanguage = new GlobalState<string>('zh')
 console.log(nowLanguage)
 
-export const setI18nConfig = () => {
-	const languageCode = PersistStatus.get('app.language') || getLocales()[0].languageCode || 'zh'
+export const setI18nConfig = async () => {
+	const languageCode = await PersistStatus.get('app.language') || getLocales()[0].languageCode || 'zh'
 	nowLanguage.setValue(languageCode)
 	i18n.locale = languageCode
 }
 
-export const changeLanguage = (languageCode: string) => {
-	PersistStatus.set('app.language', languageCode)
+export const changeLanguage = async (languageCode: string) => {
+	await PersistStatus.set('app.language', languageCode)
 	i18n.locale = languageCode
 	nowLanguage.setValue(languageCode)
 }

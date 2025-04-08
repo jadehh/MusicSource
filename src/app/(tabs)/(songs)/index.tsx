@@ -16,6 +16,7 @@ import {ScrollView, View } from 'react-native'
 const SongsScreen = () => {
     useNavigationSearch({
         searchBarOptions: {
+            tintColor: '#FF5733', // Set the search button color
             placeholder: i18n.t('find.inSongs'),
             cancelButtonText: i18n.t('find.cancel'),
         },

@@ -20,8 +20,7 @@ import {logDebug} from "@/helpers/logger";
 
 logDebug("#################RootLayout.tsx loaded ######################");
 
-// 设置国际化配置
-setI18nConfig();
+
 
 // 阻止启动屏幕自动隐藏
 SplashScreen.preventAutoHideAsync().then(() => {
